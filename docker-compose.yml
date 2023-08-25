@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+    coffeebe:
+      container_name: coffeebe
+      image: ninja1cak/coffeebackend
+      ports: 
+          - '8080:8080'
+      network_mode: bridge
+      environment:
+          DB_HOST: 'host.docker.internal'
+    database:
+      container_name: postgres
+      image: postgres
+      environment:
+        POSTGRES_PASSWORD: fadila123
+networks:
+  bridge:
+    external: true
