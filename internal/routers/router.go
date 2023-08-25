@@ -13,7 +13,6 @@ func New(db *sqlx.DB) *gin.Engine {
 	router.Use(cors.New(config.CorsConfig))
 
 	user(router, db)
-	product(router, db)
 	movie(router, db)
 	auth(router, db)
 	schedule(router, db)
