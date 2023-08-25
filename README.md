@@ -1,8 +1,8 @@
 <div align='center' style="text-align: center;">
 
-<h1 style="border:0;margin:1rem">Coffeshop Backend</h1>
+<h1 style="border:0;margin:1rem">Tickitz Backend</h1>
 
-Backend for Zwallet
+Backend for Tickitz
 
 <hr>
 <br>
@@ -69,7 +69,9 @@ CoffeeShop is marketplace for people loving coffee.
     DB_DATABASE = [YOUR DATABASE NAME]
 
     PORT = [YOUR PORT]
-
+    CLOUDINARY_URL = [YOUR CLOUDINARY API]
+    CONFIG_AUTH_EMAIL = [YOUR EMAIL]
+    CONFIG_AUTH_PASSWORD = [YOUR PASSWORD]
    ```
 
 5. Start the local server

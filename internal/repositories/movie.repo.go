@@ -195,7 +195,7 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 			title_movie, 
 			director_movie,
 			duration_movie,
-			casts_movie,
+			array_to_string(casts_movie, ', ') casts_movie,
 			synopsis_movie,
 			release_date_movie,
 			url_image_movie,

@@ -17,9 +17,9 @@ type Result struct {
 }
 
 var CorsConfig = cors.Config{
-	AllowOrigins:     []string{"https://foo.com", "*"},
-	AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
-	AllowHeaders:     []string{"Origin", "Authorization"},
+	AllowOrigins:     []string{"*", "http://localhost:3000"},
+	AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "OPTIONS", "HEAD"},
+	AllowHeaders:     []string{"Origin", "Authorization", "Content-Type"},
 	ExposeHeaders:    []string{"Content-Length"},
 	AllowCredentials: true,
 }

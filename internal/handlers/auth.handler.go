@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"ninja1cak/coffeshop-be/config"
 	"ninja1cak/coffeshop-be/internal/repositories"
 	"ninja1cak/coffeshop-be/pkg"
@@ -29,7 +30,7 @@ func (h *HandlerAuth) Login(ctx *gin.Context) {
 		}).Send(ctx)
 		return
 	}
-
+	log.Println(user)
 	userFromDB, err := h.GetAuthData(user.Email_user)
 	if err != nil {
 		pkg.NewResponse(401, &config.Result{
