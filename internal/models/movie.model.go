@@ -14,8 +14,6 @@ type Movie struct {
 	Url_image_movie    *string   `db:"url_image_movie" form:"url_image_movie" json:"url_image_movie,omitempty"`
 	Genre
 	Schedule
-	Created_at time.Time  `db:"created_at" form:"created_at" json:"created_at,omitempty"`
-	Updated_at *time.Time `db:"updated_at" form:"updated_at" json:"updated_at,omitempty"`
 }
 
 type Genre struct {

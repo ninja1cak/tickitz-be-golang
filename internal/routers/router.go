@@ -14,5 +14,6 @@ func New(db *sqlx.DB) *gin.Engine {
 	movie(router, db)
 	auth(router, db)
 	schedule(router, db)
+	booking(router, db)
 	return router
 }
