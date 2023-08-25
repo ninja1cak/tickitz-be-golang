@@ -78,7 +78,7 @@ FROM
 
 func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 	set := ""
-
+	log.Println(data.Email_user)
 	if data.Password_user != "" {
 		set += "password_user = :password_user,"
 	}
@@ -91,6 +91,14 @@ func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 		set += "last_name = :last_name,"
 	}
 
+	if data.Email_user != "" {
+		set += "email_user = :email_user,"
+	}
+
+	if data.Phone_number != nil {
+		set += "phone_number = :phone_number,"
+	}
+
 	if *data.Url_photo_user != "" {
 		set += "url_photo_user = :url_photo_user,"
 	}
@@ -101,7 +109,7 @@ func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 	SET
 		%s
 	WHERE
-		email_user = :email_user
+		id_user = :id_user
 		`, set)
 
 	_, err := r.NamedExec(query, data)

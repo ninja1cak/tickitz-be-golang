@@ -104,16 +104,14 @@ func (h *HandlerUser) UpdateDataUser(ctx *gin.Context) {
 	var user models.User
 	var err error
 	user.Url_photo_user = ctx.MustGet("image").(*string)
-	user.Email_user = ctx.MustGet("email").(string)
+	user.Id_user = ctx.MustGet("user_id").(string)
 
 	if err := ctx.ShouldBind(&user); err != nil {
 		log.Println("tes:", err)
 		return
 	}
 	if user.Password_user != "" {
-
 		user.Password_user, err = pkg.HashPassword(user.Password_user)
-
 	}
 
 	if err != nil {
