@@ -163,12 +163,12 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 	qCount := fmt.Sprintf(`select count(id_movie) total from (select
 			m.id_movie,
 			m.title_movie,
-			array_agg(name_genre) name_genre
+			string_agg(name_genre, ', ') name_genre
 		from movie m 
 		join bridge_movie_genre bmg on m.id_movie = bmg.id_movie 
 		join genre g ON g.id_genre = bmg.id_genre group by m.id_movie) p WHERE true %s %s`, qSearch, qSort)
 	err := r.Get(&counts, qCount)
-
+	log.Println(counts)
 	if err != nil {
 		return nil, err
 	}
