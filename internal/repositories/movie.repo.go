@@ -134,12 +134,13 @@ func (r *RepoMovie) CreateMovie(data *models.Movie) (*config.Result, error) {
 	return &config.Result{Data: "Movie success created"}, nil
 }
 
-func (r *RepoMovie) GetMovie(limit string, page string, search string, sort string) (*config.Result, error) {
+func (r *RepoMovie) GetMovie(limit string, page string, search string, sort string, searchById string) (*config.Result, error) {
 	var offset int
 	var next int
 	var prev int
 	var qSearch string = ""
 	var qSort string = ""
+	var qSearchById string = ""
 
 	if search != "" {
 		search = "%" + search + "%"
@@ -150,6 +151,11 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 		sort = "%" + sort + "%"
 		qSort = fmt.Sprintf("AND name_genre ILIKE '%s'", sort)
 	}
+
+	if searchById != "" {
+		qSearchById = fmt.Sprintf("AND m.id_movie = %s ", searchById)
+	}
+
 	counts := struct {
 		Count int `db:"total"`
 	}{}
@@ -157,7 +163,7 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 	qCount := fmt.Sprintf(`select count(id_movie) total from (select
 			m.id_movie,
 			m.title_movie,
-			string_agg(name_genre, ', ' order by name_genre) name_genre
+			array_agg(name_genre) name_genre
 		from movie m 
 		join bridge_movie_genre bmg on m.id_movie = bmg.id_movie 
 		join genre g ON g.id_genre = bmg.id_genre group by m.id_movie) p WHERE true %s %s`, qSearch, qSort)
@@ -199,11 +205,11 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 			synopsis_movie,
 			release_date_movie,
 			url_image_movie,
-			string_agg(name_genre, ', ' order by name_genre) name_genre
+			array_agg(name_genre) name_genre
 		from movie m 
 		join bridge_movie_genre bmg on m.id_movie = bmg.id_movie 
-		join genre g ON g.id_genre = bmg.id_genre %s %s
-		group by m.id_movie LIMIT %s OFFSET %v `, qSearch, qSort, limit, offset)
+		join genre g ON g.id_genre = bmg.id_genre %s %s %s
+		group by m.id_movie LIMIT %s OFFSET %v `, qSearch, qSort, qSearchById, limit, offset)
 
 	var data []models.Movie
 	err = r.Select(&data, query)

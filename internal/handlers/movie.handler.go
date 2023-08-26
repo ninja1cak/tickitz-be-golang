@@ -62,7 +62,7 @@ func (h *HandlerMovie) GetDataMovie(ctx *gin.Context) {
 	limit := ctx.Query("limit")
 	search := ctx.Query("search")
 	sort := ctx.Query("sort")
-
+	searchByIdMovie := ctx.Query("id_movie")
 	if page == "" {
 		page = "1"
 	}
@@ -70,7 +70,7 @@ func (h *HandlerMovie) GetDataMovie(ctx *gin.Context) {
 	if limit == "" {
 		limit = "3"
 	}
-	data, err := h.GetMovie(limit, page, search, sort)
+	data, err := h.GetMovie(limit, page, search, sort, searchByIdMovie)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"status":  http.StatusBadRequest,
