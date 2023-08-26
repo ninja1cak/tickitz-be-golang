@@ -5,7 +5,7 @@
 -- DROP TABLE public."user";
 
 CREATE TABLE public."user" (
-	id_user int4 NOT NULL DEFAULT nextval('users_id_user_seq'::regclass),
+	id_user serial4 NOT NULL,
 	email_user varchar(255) NOT NULL,
 	password_user text NOT NULL,
 	username text NULL,

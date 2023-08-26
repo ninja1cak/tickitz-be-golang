@@ -18,6 +18,7 @@ func movie(g *gin.Engine, d *sqlx.DB) {
 
 	router.POST("/", middleware.IsVerify("user", "admin"), middleware.UploadFile, handler.PostDataMovie)
 	router.GET("/", handler.GetDataMovie)
+	router.GET("/genre", handler.GetDataGenre)
 	router.PATCH("/:id_movie", middleware.IsVerify("user", "admin"), middleware.UploadFile, handler.UpdateDatamovie)
 	router.DELETE("/:id_movie", middleware.IsVerify("user", "admin"), handler.DeleteDatamovie)
 

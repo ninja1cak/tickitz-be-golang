@@ -215,6 +215,17 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 	return &config.Result{Data: data, Meta: meta}, nil
 }
 
+func (r *RepoMovie) GetGenre() (*config.Result, error) {
+	var data []models.Genre
+	err := r.Select(&data, `SELECT name_genre FROM public.genre`)
+	if err != nil {
+		return nil, err
+	}
+
+	return &config.Result{Data: data}, nil
+
+}
+
 func (r *RepoMovie) UpdateMovie(data *models.Movie) (string, error) {
 	set := ""
 

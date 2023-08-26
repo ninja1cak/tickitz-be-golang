@@ -83,6 +83,21 @@ func (h *HandlerMovie) GetDataMovie(ctx *gin.Context) {
 
 }
 
+func (h *HandlerMovie) GetDataGenre(ctx *gin.Context) {
+
+	data, err := h.GetGenre()
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"status":  http.StatusBadRequest,
+			"message": ctx.Error(err),
+		})
+
+	} else {
+		pkg.NewResponse(200, data).Send(ctx)
+	}
+
+}
+
 func (h *HandlerMovie) UpdateDatamovie(ctx *gin.Context) {
 	var movie models.Movie
 	movie.Url_image_movie = ctx.MustGet("image").(*string)
