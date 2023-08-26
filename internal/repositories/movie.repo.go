@@ -205,7 +205,7 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 			synopsis_movie,
 			release_date_movie,
 			url_image_movie,
-			array_agg(name_genre) name_genre
+			string_agg(name_genre, ',') name_genre
 		from movie m 
 		join bridge_movie_genre bmg on m.id_movie = bmg.id_movie 
 		join genre g ON g.id_genre = bmg.id_genre %s %s %s
