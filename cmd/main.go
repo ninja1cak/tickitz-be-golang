@@ -5,6 +5,9 @@ import (
 	"ninja1cak/coffeshop-be/internal/routers"
 	"ninja1cak/coffeshop-be/pkg"
 
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/github"
+
 	_ "github.com/joho/godotenv/autoload"
 )
 
