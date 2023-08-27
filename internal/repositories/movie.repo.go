@@ -23,7 +23,7 @@ func NewMovie(db *sqlx.DB) *RepoMovie {
 
 func (r *RepoMovie) CreateMovie(data *models.Movie) (*config.Result, error) {
 	data.Casts_movie = strings.Join(data.CastsArr_movie, ",")
-
+	log.Println(data.Cinema)
 	query := `INSERT INTO public.movie (
 		title_movie, 
 		director_movie,
@@ -60,6 +60,8 @@ func (r *RepoMovie) CreateMovie(data *models.Movie) (*config.Result, error) {
 	var genre models.Genre
 
 	for i := 0; i < len(data.Genre.GenreArr); i++ {
+		log.Println(data.Genre)
+		log.Println(data.GenreArr[i])
 		r.Get(&genre, r.Rebind(`SELECT id_genre FROM public.genre WHERE name_genre = ?`), data.GenreArr[i])
 		if genre.Id_genre != 0 {
 			r.MustExec(`INSERT INTO public.bridge_movie_genre(id_movie, id_genre) VALUES ($1, $2)`, movie.Id_movie, genre.Id_genre)
@@ -95,6 +97,8 @@ func (r *RepoMovie) CreateMovie(data *models.Movie) (*config.Result, error) {
 	r.Get(&schedule, r.Rebind(`SELECT id_schedule FROM public.schedule WHERE id_movie = ?`), movie.Id_movie)
 
 	for i := 0; i < len(data.Schedule.CinemaArr_name); i++ {
+		log.Println(data.Cinema)
+		log.Println(data.Cinema.CinemaArr_name[i])
 		r.Get(&cinema, r.Rebind(`SELECT id_cinema FROM public.cinema WHERE cinema_name = ?`), data.Cinema.CinemaArr_name[i])
 		if cinema.Id_cinema == 0 {
 			return nil, errors.New("Cinema not found")

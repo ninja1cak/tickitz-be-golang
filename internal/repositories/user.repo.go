@@ -55,7 +55,8 @@ func (r *RepoUser) GetUser(user_id string) (interface{}, error) {
 	first_name,
 	last_name,
 	phone_number,
-	url_photo_user
+	url_photo_user,
+	role
 FROM
 	public.user %s`, queryId)
 
