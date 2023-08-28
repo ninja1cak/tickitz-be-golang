@@ -110,6 +110,7 @@ func (h *HandlerUser) UpdateDataUser(ctx *gin.Context) {
 		log.Println("tes:", err)
 		return
 	}
+	log.Println(user)
 	if user.Password_user != "" {
 		user.Password_user, err = pkg.HashPassword(user.Password_user)
 	}

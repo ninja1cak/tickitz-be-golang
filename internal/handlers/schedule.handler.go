@@ -74,3 +74,18 @@ func (h *HandleSchedule) GetDataTime(ctx *gin.Context) {
 	}
 
 }
+
+func (h *HandleSchedule) GetDataCinema(ctx *gin.Context) {
+
+	data, err := h.GetCinema()
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"status":  http.StatusBadRequest,
+			"message": ctx.Error(err),
+		})
+
+	} else {
+		pkg.NewResponse(200, data).Send(ctx)
+	}
+
+}

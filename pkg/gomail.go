@@ -15,11 +15,11 @@ func SendMail(email string, token string) {
 	CONFIG_AUTH_PASSWORD := os.Getenv("CONFIG_AUTH_PASSWORD")
 
 	mailer := gomail.NewMessage()
-	mailer.SetHeader("From", "Online Coffee Shop <zwallet6@gmail.com>")
+	mailer.SetHeader("From", "Tickitz <zwallet6@gmail.com>")
 	mailer.SetHeader("To", email)
-	mailer.SetAddressHeader("Cc", "zwallet6@gmail.com", "Tra Lala La")
+	mailer.SetAddressHeader("Cc", "zwallet6@gmail.com", "Verify")
 	mailer.SetHeader("Subject", "Activation Account")
-	mailer.SetBody("text/html", "Open this link to activate your account : localhost:8080/auth/"+token)
+	mailer.SetBody("text/html", "Open this link to activate your account : http://localhost:3000/register/"+token)
 	dialer := gomail.NewDialer(
 		CONFIG_SMTP_HOST,
 		CONFIG_SMTP_PORT,

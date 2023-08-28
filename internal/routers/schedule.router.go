@@ -18,5 +18,6 @@ func schedule(g *gin.Engine, d *sqlx.DB) {
 	router.GET("/", handler.GetDataSchedule)
 	router.GET("/city", handler.GetDataCity)
 	router.GET("/time", handler.GetDataTime)
+	router.GET("/cinema", handler.GetDataCinema)
 
 }

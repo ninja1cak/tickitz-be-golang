@@ -55,7 +55,8 @@ func (r *RepoUser) GetUser(user_id string) (interface{}, error) {
 	first_name,
 	last_name,
 	phone_number,
-	url_photo_user
+	url_photo_user,
+	role
 FROM
 	public.user %s`, queryId)
 
@@ -78,16 +79,16 @@ FROM
 
 func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 	set := ""
-	log.Println(data.Email_user)
+	log.Println(data.Password_user)
 	if data.Password_user != "" {
 		set += "password_user = :password_user,"
 	}
 
-	if data.First_name != nil {
+	if data.First_name != nil && *data.First_name != "" {
 		set += "first_name = :first_name,"
 	}
 
-	if data.Last_name != nil {
+	if data.Last_name != nil && *data.Last_name != "" {
 		set += "last_name = :last_name,"
 	}
 
@@ -95,7 +96,7 @@ func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 		set += "email_user = :email_user,"
 	}
 
-	if data.Phone_number != nil {
+	if data.Phone_number != nil && *data.Phone_number != "+62" {
 		set += "phone_number = :phone_number,"
 	}
 
