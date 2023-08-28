@@ -56,6 +56,7 @@ func (r *RepoSchedule) GetSchedule(limit string, page string, sortLocation strin
 		(	
 	select		
 		m.id_movie,
+		s.id_schedule,
 		title_movie,
 		string_agg(distinct name_genre, ', ') name_genre ,
 		date_start,
@@ -75,7 +76,7 @@ func (r *RepoSchedule) GetSchedule(limit string, page string, sortLocation strin
 	join bridge_schedule_city bsc on bsc.id_schedule = s.id_schedule 
 	join city c on c.id_city = bsc.id_city 
 	join bridge_schedule_cinema bsc2 on bsc2.id_schedule  = s.id_schedule 
-	join cinema c2 on c2.id_cinema = bsc2.id_cinema where true %s %s %s %s group by m.id_movie, m.title_movie, s.date_start, s.date_end, price_seat, cinema_name, cinema_logo_url, city
+	join cinema c2 on c2.id_cinema = bsc2.id_cinema where true %s %s %s %s group by s.id_schedule,m.id_movie, m.title_movie, s.date_start, s.date_end, price_seat, cinema_name, cinema_logo_url, city
 	) ta`, qSortLocation, qSortTime, qSortIdMovie, qSortByDate)
 	err := r.Get(&counts, qCount)
 
@@ -109,6 +110,7 @@ func (r *RepoSchedule) GetSchedule(limit string, page string, sortLocation strin
 	query := fmt.Sprintf(`select 
 	
 			m.id_movie,
+			s.id_schedule,
 			title_movie,
 			string_agg(distinct name_genre, ', ') name_genre ,
 			date_start,
@@ -128,7 +130,7 @@ func (r *RepoSchedule) GetSchedule(limit string, page string, sortLocation strin
 		join bridge_schedule_city bsc on bsc.id_schedule = s.id_schedule 
 		join city c on c.id_city = bsc.id_city 
 		join bridge_schedule_cinema bsc2 on bsc2.id_schedule  = s.id_schedule 
-		join cinema c2 on c2.id_cinema = bsc2.id_cinema %s %s %s %s group by m.id_movie, m.title_movie, s.date_start, s.date_end, price_seat, cinema_name, cinema_logo_url, city 
+		join cinema c2 on c2.id_cinema = bsc2.id_cinema %s %s %s %s group by s.id_schedule, m.id_movie, m.title_movie, s.date_start, s.date_end, price_seat, cinema_name, cinema_logo_url, city 
 		limit %s offset %v `, qSortLocation, qSortTime, qSortIdMovie, qSortByDate, limit, offset)
 
 	var data []models.Movie
