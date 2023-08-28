@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"ninja1cak/coffeshop-be/config"
 	"ninja1cak/coffeshop-be/internal/models"
@@ -63,6 +64,8 @@ func (h *HandlerMovie) GetDataMovie(ctx *gin.Context) {
 	search := ctx.Query("search")
 	sort := ctx.Query("sort")
 	searchByIdMovie := ctx.Query("id_movie")
+	releaseDateMovie := ctx.Query("release_date")
+	log.Println("release date", releaseDateMovie)
 	if page == "" {
 		page = "1"
 	}
@@ -70,7 +73,7 @@ func (h *HandlerMovie) GetDataMovie(ctx *gin.Context) {
 	if limit == "" {
 		limit = "3"
 	}
-	data, err := h.GetMovie(limit, page, search, sort, searchByIdMovie)
+	data, err := h.GetMovie(limit, page, search, sort, searchByIdMovie, releaseDateMovie)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"status":  http.StatusBadRequest,
