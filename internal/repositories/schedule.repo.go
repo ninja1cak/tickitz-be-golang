@@ -164,3 +164,15 @@ func (r *RepoSchedule) GetTime() (*config.Result, error) {
 
 	return &config.Result{Data: time}, nil
 }
+
+func (r *RepoSchedule) GetCinema() (*config.Result, error) {
+	var cinema []models.Cinema
+
+	err := r.Select(&cinema, `select cinema_name from public.cinema`)
+	log.Println(err)
+	if err != nil {
+		return nil, err
+	}
+
+	return &config.Result{Data: cinema}, nil
+}
