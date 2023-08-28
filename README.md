@@ -41,6 +41,7 @@ Tickits is a web-based application for ticket booking movies and cinemas.
 
 ## Technologies Used
 
+- [Golang](https://go.dev/)
 - [Gin Gonic](github.com/gin-gonic/gin)
 - [JsonWebToken](github.com/golang-jwt/jwt/v5)
 - [Postgresql](https://www.postgresql.org/)
