@@ -79,7 +79,7 @@ FROM
 
 func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 	set := ""
-	log.Println(data.Email_user)
+	log.Println(data.Password_user)
 	if data.Password_user != "" {
 		set += "password_user = :password_user,"
 	}
@@ -96,7 +96,7 @@ func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 		set += "email_user = :email_user,"
 	}
 
-	if data.Phone_number != nil || *data.Phone_number != "" {
+	if data.Phone_number != nil && *data.Phone_number != "+62" {
 		set += "phone_number = :phone_number,"
 	}
 
