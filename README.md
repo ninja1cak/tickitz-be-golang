@@ -105,7 +105,7 @@ Currently, there are no contributors to this project. If you would like to contr
 
 ## Related Projects
 
-- [Tickitz Front End]([https://github.com/ninja1cak/tickitz-react](https://github.com/JulianMindria/Frontend_tickitzv2)) - Front End
+- [Tickitz Front End](https://github.com/JulianMindria/Frontend_tickitzv2) - Front End
 
 ## License
 
