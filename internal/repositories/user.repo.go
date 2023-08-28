@@ -84,11 +84,11 @@ func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 		set += "password_user = :password_user,"
 	}
 
-	if data.First_name != nil {
+	if data.First_name != nil && *data.First_name != "" {
 		set += "first_name = :first_name,"
 	}
 
-	if data.Last_name != nil {
+	if data.Last_name != nil && *data.Last_name != "" {
 		set += "last_name = :last_name,"
 	}
 
@@ -96,7 +96,7 @@ func (r *RepoUser) UpdateUser(data *models.User) (string, error) {
 		set += "email_user = :email_user,"
 	}
 
-	if data.Phone_number != nil {
+	if data.Phone_number != nil || *data.Phone_number != "" {
 		set += "phone_number = :phone_number,"
 	}
 

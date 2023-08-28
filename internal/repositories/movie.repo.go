@@ -212,8 +212,8 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 			string_agg(name_genre, ',') name_genre
 		from movie m 
 		join bridge_movie_genre bmg on m.id_movie = bmg.id_movie 
-		join genre g ON g.id_genre = bmg.id_genre %s %s %s
-		group by m.id_movie LIMIT %s OFFSET %v `, qSearch, qSort, qSearchById, limit, offset)
+		join genre g ON g.id_genre = bmg.id_genre %s %s %s 
+		group by m.id_movie order by m.id_movie LIMIT %s OFFSET %v `, qSearch, qSort, qSearchById, limit, offset)
 
 	var data []models.Movie
 	err = r.Select(&data, query)
