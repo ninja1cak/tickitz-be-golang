@@ -138,13 +138,14 @@ func (r *RepoMovie) CreateMovie(data *models.Movie) (*config.Result, error) {
 	return &config.Result{Data: "Movie success created"}, nil
 }
 
-func (r *RepoMovie) GetMovie(limit string, page string, search string, sort string, searchById string) (*config.Result, error) {
+func (r *RepoMovie) GetMovie(limit string, page string, search string, sort string, searchById string, sortByReleaseDate string) (*config.Result, error) {
 	var offset int
 	var next int
 	var prev int
 	var qSearch string = ""
 	var qSort string = ""
 	var qSearchById string = ""
+	var qSearchByReleaseDate string = ""
 
 	if search != "" {
 		search = "%" + search + "%"
@@ -160,6 +161,10 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 		qSearchById = fmt.Sprintf("AND m.id_movie = %s ", searchById)
 	}
 
+	if sortByReleaseDate != "" {
+		qSearchByReleaseDate = fmt.Sprintf(`AND date_part('year',  '%s'::DATE	) = date_part('year',  release_date_movie) and date_part('month',  '%s'::DATE) = date_part('month',  release_date_movie)  `, sortByReleaseDate, sortByReleaseDate)
+	}
+	log.Println(qSearchByReleaseDate)
 	counts := struct {
 		Count int `db:"total"`
 	}{}
@@ -167,10 +172,11 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 	qCount := fmt.Sprintf(`select count(id_movie) total from (select
 			m.id_movie,
 			m.title_movie,
+			m.release_date_movie,
 			string_agg(name_genre, ', ') name_genre
 		from movie m 
 		join bridge_movie_genre bmg on m.id_movie = bmg.id_movie 
-		join genre g ON g.id_genre = bmg.id_genre group by m.id_movie) p WHERE true %s %s`, qSearch, qSort)
+		join genre g ON g.id_genre = bmg.id_genre group by m.id_movie) p WHERE true %s %s %s`, qSearch, qSort, qSearchByReleaseDate)
 	err := r.Get(&counts, qCount)
 	log.Println(counts)
 	if err != nil {
@@ -212,8 +218,8 @@ func (r *RepoMovie) GetMovie(limit string, page string, search string, sort stri
 			string_agg(name_genre, ',') name_genre
 		from movie m 
 		join bridge_movie_genre bmg on m.id_movie = bmg.id_movie 
-		join genre g ON g.id_genre = bmg.id_genre %s %s %s 
-		group by m.id_movie order by m.id_movie LIMIT %s OFFSET %v `, qSearch, qSort, qSearchById, limit, offset)
+		join genre g ON g.id_genre = bmg.id_genre %s %s %s %s
+		group by m.id_movie order by m.id_movie LIMIT %s OFFSET %v `, qSearch, qSort, qSearchById, qSearchByReleaseDate, limit, offset)
 
 	var data []models.Movie
 	err = r.Select(&data, query)
