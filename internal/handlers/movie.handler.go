@@ -33,16 +33,6 @@ func (h *HandlerMovie) PostDataMovie(ctx *gin.Context) {
 		return
 	}
 
-	// if err := ctx.ShouldBind(&movieSize); err != nil {
-	// 	log.Println("tessssssssssssss", movieSize)
-
-	// 	ctx.JSON(http.StatusBadRequest, gin.H{
-	// 		"status":  http.StatusBadRequest,
-	// 		"message": ctx.Error(err),
-	// 	})
-	// 	return
-	// }
-
 	data, err := h.CreateMovie(&movie)
 	if err != nil {
 		pkg.NewResponse(401, &config.Result{

@@ -74,13 +74,6 @@ func (h *HandlerUser) PostDataUser(ctx *gin.Context) {
 }
 
 func (h *HandlerUser) GetDataUser(ctx *gin.Context) {
-	// var user models.User
-
-	// if err := ctx.ShouldBind(&user); err != nil {
-
-	// 	ctx.AbortWithError(http.StatusBadRequest, err)
-	// 	return
-	// }
 	response, err := h.GetUser("")
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
